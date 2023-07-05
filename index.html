@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .button {
+            position: fixed;
+            top: 50px;
+            left: 50px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #fc33af, #a94df5, #4183D7);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            animation: rainbow 5s ease-in-out infinite;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .output {
+            margin-top: 20px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+            font-size: 24px;
+            border-radius: 4px;
+            padding: 10px;
+            text-align: left;
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .output::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+           
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        .output::-webkit-scrollbar {
+            width: 8px;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+
+        .output::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        .output p {
+            margin: 10px 0;
+            background: -webkit-linear-gradient(135deg, #474345, #F9A7C7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px;
+            color: #e74c3c;
+            pointer-events: none;
+            opacity: 0;
+            animation: heartFade 1s ease-in-out;
+        }
+
+        @keyframes heartFade {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.3);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="button" class="button" onclick="showNextPhrase()">Show Next Phrase</button>
+        <div id="output" class="output"></div>
+    </div>
+
+    <script>
+        var phrases = ['When the moon fell in love with the sun', 'all was golden in the sky', 'all was golden when the day met the night', 'When the sun found the moon', 'She was making memes in a garden', 'Under the rainbow umbrellla trees', 'In the middle of summer',
+        'When the moon found the sun', 'She looked like she was barely hanging on', 'But her eyes saved her life' , 'In the middle of summer (summer)',    
+        'So she said, "Would it be all right', 'If we just sat and talked for a little while', 'If in exchange for your time', 'I give you this smile?"',
+        'So she said, That is ok', 'Then she fell in love', 'And she didntt know how', 'Just hanging around', 'Then she fell in love.'
+        
+      ];
+        var currentIndex = 0;
+        var outputDiv = document.getElementById('output');
+        var button = document.getElementById('button');
+
+        function showNextPhrase() {
+            if (currentIndex >= phrases.length) {
+                button.disabled = true;
+                button.textContent = 'Happy 6 month anniversary mimor';
+                return;
+            }
+
+            var phrase = phrases[currentIndex];
+            var newPhrase = document.createElement('p');
+            newPhrase.textContent = phrase;
+
+            outputDiv.appendChild(newPhrase);
+            currentIndex++;
+
+            createHeart();
+        }
+
+        function createHeart() {
+            var heart = document.createElement('span');
+            heart.classList.add('heart');
+            heart.innerHTML = '&#x2665;'; // Unicode for heart symbol
+
+            outputDiv.appendChild(heart);
+
+            setTimeout(function () {
+                heart.remove();
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
